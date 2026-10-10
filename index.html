@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기하 해설 찾기</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{--bg:#fff;--fg:#111;--muted:#777;--line:#e4e4e4;--soft:#f5f5f5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.8 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",sans-serif;text-align:center}
+.wrap{max-width:720px;margin:0 auto;padding:56px 16px 96px}
+h1{font-size:20px;font-weight:700;letter-spacing:-.02em;margin:0}
+.sub{color:var(--muted);font-size:13px;margin:6px 0 28px}
+form{display:flex;gap:8px;max-width:420px;margin:0 auto}
+input{flex:1;min-width:0;font:inherit;font-size:22px;text-align:center;padding:12px;border:1.5px solid var(--fg);border-radius:0;background:var(--bg);color:var(--fg);outline:none}
+button{font:inherit;font-size:14px;padding:10px 16px;border:1px solid var(--fg);border-radius:0;background:var(--bg);color:var(--fg);cursor:pointer}
+button:hover{background:var(--fg);color:var(--bg)}
+button.primary{background:var(--fg);color:var(--bg);font-size:16px;padding:12px 22px}
+.nav{display:flex;gap:8px;justify-content:center;margin:14px 0 0;flex-wrap:wrap}
+.nav button{border-color:var(--line)}
+.card{margin-top:44px;padding-top:36px;border-top:1px solid var(--fg)}
+.pid{font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.topic{color:var(--muted);font-size:14px;margin-top:8px}
+.ans{display:inline-block;margin:22px 0 6px;border:2px solid var(--fg);padding:8px 28px;font-size:22px;font-weight:700}
+.ans .k{font-size:13px;font-weight:500;color:var(--muted);margin-right:10px;vertical-align:middle}
+.meta{color:var(--muted);font-size:13px}
+.label{font-size:12px;letter-spacing:.2em;color:var(--muted);margin:40px 0 12px}
+.label::before,.label::after{content:"";display:inline-block;width:28px;height:1px;background:var(--line);vertical-align:middle;margin:0 12px}
+.prob,.exp{text-align:left;font-size:16.5px;line-height:1.95;word-break:keep-all;overflow-wrap:anywhere}
+.prob{border:1px solid var(--fg);padding:18px 20px}
+.prob p{margin:0 0 8px}.prob p:last-child{margin:0}
+.exp p{margin:0 0 12px}
+.exp .eq{text-align:center;margin:14px 0}
+.exp .formula{border:1px solid var(--line);background:var(--soft);padding:12px 16px;margin:0 0 22px;font-size:15px}
+.exp .formula b{margin-right:6px}
+.exp .stephead{margin:26px 0 8px;font-weight:700;line-height:1.7}
+.step{display:inline-block;font-size:11px;font-weight:700;background:var(--fg);color:var(--bg);padding:0 7px;margin-right:8px;vertical-align:2px;letter-spacing:.03em}
+.aside{color:var(--muted);font-size:.86em}
+.hint{display:block;color:var(--muted);font-size:.9em;margin-top:6px}
+.katex{font-size:1.06em}
+.katex-display{margin:.3em 0}
+.katex-display{margin:.6em 0;overflow-x:auto;overflow-y:hidden}
+.note{margin-top:28px;border:1px dashed var(--fg);padding:12px 16px;font-size:14px}
+.wrong-btn{margin-top:18px;font-size:15px;padding:10px 22px}
+.wrong-btn.on{background:var(--fg);color:var(--bg)}
+.chip.wrong{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.pid .mark{font-size:14px;font-weight:700;vertical-align:middle;margin-left:10px;border:1.5px solid var(--fg);padding:2px 8px;letter-spacing:0}
+.profile{font-size:13px;margin:10px 0 0}
+.profile button{font-size:12px;padding:3px 10px;margin-left:6px;border-color:var(--line)}
+.secs{display:flex;justify-content:center;gap:0;margin:0 auto 12px}
+.secs button{width:64px;font-size:18px;font-weight:700;padding:8px 0;margin-left:-1px}
+.secs button.on{background:var(--fg);color:var(--bg)}
+.secs button:disabled{color:var(--line);border-color:var(--line);cursor:default;background:var(--bg)}
+.nt{text-align:left}
+.nt h2{font-size:18px;margin:40px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--fg)}
+.nt .flow{border:2px solid var(--fg);padding:18px 20px}
+.nt .flow h3{margin:0 0 10px;font-size:16px;text-align:center}
+.nt .flow ol{margin:0;padding-left:22px}.nt .flow li{margin:8px 0;line-height:1.7}
+.nt a.go{display:inline-block;font-size:12px;font-weight:700;border:1px solid var(--fg);padding:0 6px;margin:0 2px;color:var(--fg);text-decoration:none;cursor:pointer}
+.rule{border:1px solid var(--line);padding:16px 18px;margin:12px 0;scroll-margin-top:12px}
+.rule.flash{border-color:var(--fg)}
+.rule .rh{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.rule .rid{font-weight:800}.rule .rt{font-weight:700;font-size:16px}
+.rule .lv{font-size:11px;border:1px solid var(--fg);padding:0 6px;margin-left:auto}
+.rule .lv.hard{background:var(--fg);color:var(--bg)}
+.rule .k{display:block;font-size:11px;letter-spacing:.15em;color:var(--muted);margin:12px 0 2px}
+.rule ol{margin:4px 0 0;padding-left:22px}.rule li{margin:4px 0;line-height:1.75}
+.rule .why{line-height:1.75}.rule .pit{line-height:1.75}
+.rule .fm{text-align:center;margin:10px 0 0;background:var(--soft);padding:8px}
+.rule .ex{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.ntabs{display:flex;justify-content:center;flex-wrap:wrap;margin:22px 0 0}
+.ntabs button{margin-left:-1px;font-size:14px;padding:8px 12px}
+.ntabs button.on{background:var(--fg);color:var(--bg)}
+.pb .forms{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0}
+.pb .form{border:1px dashed var(--fg);padding:1px 8px;font-size:14px;line-height:1.8}
+.pb .clue{border-left:3px solid var(--fg);padding:4px 0 4px 12px;margin:10px 0}
+.pb .chain{counter-reset:st;margin:6px 0 0;padding:0;list-style:none}
+.pb .chain li{position:relative;padding:0 0 14px 34px;margin:0}
+.pb .chain li::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:2px;width:22px;height:22px;border:1.5px solid var(--fg);text-align:center;font-size:12px;font-weight:700;line-height:20px}
+.pb .chain li::after{content:"";position:absolute;left:11px;top:26px;bottom:2px;border-left:1px solid var(--line)}
+.pb .chain li:last-child::after{display:none}
+.pb .gv{color:var(--muted);font-size:.92em}.pb .nx{font-size:.92em}
+.pb .nx b,.pb .gv b{color:var(--fg);font-size:11px;letter-spacing:.1em;margin-right:4px}
+.empty{color:var(--muted);padding:40px 0}
+.list{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.chip{font-size:13px;padding:4px 10px;border-color:var(--line)}
+details{margin-top:40px}
+details summary{cursor:pointer;color:var(--muted);font-size:13px;list-style:none}
+details summary::-webkit-details-marker{display:none}
+.page-img{width:100%;margin-top:12px;border:1px solid var(--line);filter:grayscale(1)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>자이스토리 고2 기하</h1>
+  <div class="profile" id="profile"></div>
+  <div class="sub">단원을 고르고 번호만 입력하세요</div>
+  <div class="secs" id="secs"></div>
+  <form id="f">
+    <input id="q" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" autocomplete="off" placeholder="번호" autofocus>
+    <button class="primary" type="submit">찾기</button>
+  </form>
+  <div class="nav"><button id="prev">← 이전</button><button id="all">전체 목록</button><button id="wrongs">틀린 문제</button><button id="next">다음 →</button></div>
+  <div id="out"></div>
+</div>
+<script src="data.js?v=1"></script>
+
+<script>
+const DATA = (window.DATA || []).filter(d => d.id && !d.continuation)
+  .sort((a,b) => (a.section||'').localeCompare(b.section||'') || a.num - b.num);
+const $ = s => document.querySelector(s);
+let cur = -1, deg = 0, fromRule = null;
+const SECS = [...new Set((window.DATA||[]).map(d=>d.section))].sort();
+const has = sec => DATA.some(d => d.section === sec);
+let sec = (() => { try { const v = localStorage.getItem('sec'); return v && has(v) ? v : 'A'; } catch { return 'A'; } })();
+function renderSecs(){
+  $('#secs').innerHTML = SECS.map(x => `<button type="button" class="${x === sec ? 'on' : ''}" ${has(x) ? '' : 'disabled title="아직 준비 중"'} onclick="pickSec('${x}')">${x}</button>`).join('');
+}
+function pickSec(x){ sec = x; try { localStorage.setItem('sec', x); } catch {} renderSecs(); $('#q').focus(); if ($('#q').value) search(); }
+const ls = { get(k){ try { return localStorage.getItem(k); } catch { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch {} } };
+let profile = ls.get('profile') || '';
+const key = () => 'wrong:' + profile;
+const loadW = () => { try { return new Set(JSON.parse(ls.get(key()) || '[]')); } catch { return new Set(); } };
+let wrong = loadW();
+const saveW = () => { ls.set(key(), JSON.stringify([...wrong])); updWrongBtn(); };
+function profiles(){ try { return JSON.parse(ls.get('profiles') || '[]'); } catch { return []; } }
+function setProfile(){
+  const list = profiles();
+  const name = (prompt(list.length ? `프로필 이름을 입력하세요\n(저장된 프로필: ${list.join(', ')})` : '프로필 이름을 입력하세요', profile) || '').trim();
+  if (!name) return false;
+  profile = name;
+  ls.set('profile', name);
+  if (!list.includes(name)) ls.set('profiles', JSON.stringify([...list, name]));
+  wrong = loadW(); renderProfile(); updWrongBtn();
+  if (cur >= 0) show(cur, true);
+  return true;
+}
+function renderProfile(){
+  $('#profile').innerHTML = profile
+    ? `프로필 <b>${esc(profile)}</b><button onclick="setProfile()">변경</button>`
+    : `<button onclick="setProfile()">프로필 만들기</button>`;
+}
+function updWrongBtn(){ $('#wrongs').textContent = `틀린 문제 ${wrong.size}`; }
+function toggleWrong(){ if (!profile && !setProfile()) return; const id = DATA[cur].id; wrong.has(id) ? wrong.delete(id) : wrong.add(id); saveW(); show(cur, true); }
+
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// 괄호 속 보충 설명(…야.) 을 작게: 수식($…$) 밖의 괄호만 짝을 맞춰 찾는다
+function asides(t){
+  let inM = false, depth = 0, start = -1;
+  for (let i = 0; i < t.length; i++){
+    const c = t[i];
+    if (c === '$') { inM = !inM; continue; }
+    if (inM) continue;
+    if (c === '(') { if (depth++ === 0) start = i; }
+    else if (c === ')' && depth > 0 && --depth === 0) {
+      const body = t.slice(start + 1, i);
+      if (body.length > 14 && /[가-힣]/.test(body.replace(/\$[^$]*\$/g, '')) && /(야|해|돼|지|어|거야|이야|아)[.!]?\s*$/.test(body.replace(/\$[^$]*\$/g, '').trim()))
+        t = t.slice(0, start) + '\u0001' + body + '\u0002' + t.slice(i + 1); // 길이 같음 → i 유지
+    }
+  }
+  return esc(t).replace(/\u0001/g, '<span class="aside">(').replace(/\u0002/g, ')</span>');
+}
+const mathOnly = l => l.replace(/\$\$[^$]*\$\$|\$[^$]*\$/g, '').replace(/[\s,.…⋯㉠-㉯∴=()]|\(\s*\)/g, '') === '' && /\$/.test(l);
+function paras(s, isProb){
+  return String(s ?? '').split(/\n+/).filter(Boolean).map(l => {
+    l = l.trim();
+    if (isProb) return /^\[단서/.test(l) ? `<span class="hint">${esc(l)}</span>` : `<p>${esc(l)}</p>`;
+    let m;
+    if ((m = l.match(/^정답 공식\s*:\s*(.*)$/))) return `<div class="formula"><b>정답 공식</b>${asides(m[1])}</div>`;
+    if ((m = l.match(/^(\d(?:st|nd|rd|th))\s*(.*)$/))) {
+      const rest = m[2];
+      // 첫 문장(…하자. / …구해. 등)을 단계 제목으로
+      const k = rest.search(/(?:자|해|봐|보자)\.\s/);
+      if (k > 0 && k < 160) {
+        const head = rest.slice(0, k + 2), body = rest.slice(k + 2).trim();
+        return `<div class="stephead"><span class="step">${m[1]}</span>${esc(head)}</div>` + (body ? `<p>${asides(body)}</p>` : '');
+      }
+      return `<div class="stephead"><span class="step">${m[1]}</span></div><p>${asides(rest)}</p>`;
+    }
+    if (mathOnly(l)) return `<div class="eq">${esc(l)}</div>`;
+    return `<p>${asides(l)}</p>`;
+  }).join('');
+}
+function renderMath(el){
+  if (window.renderMathInElement) renderMathInElement(el, {
+    delimiters: [{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false}],
+    throwOnError: false,
+    preProcess: m => m.replace(/\\lim_/g, '\\lim\\limits_').replace(/\\frac/g, '\\dfrac')
+  });
+}
+function norm(q){
+  const m = q.trim().toUpperCase().replace(/\s+/g,'').match(/^([A-Z]?)0*(\d+)$/);
+  return m ? { sec: m[1], num: +m[2] } : null;
+}
+function search(e){
+  e && e.preventDefault();
+  const n = norm($('#q').value);
+  if (!n) return;
+  const want = n.sec || sec;
+  const hits = DATA.map((d,i)=>[d,i]).filter(([d]) => d.num === n.num && d.section === want);
+  if (hits.length === 1) return show(hits[0][1]);
+  $('#out').innerHTML = hits.length
+    ? `<div class="card">같은 번호가 여러 개 있어요<div class="list">${hits.map(([d,i]) => `<button class="chip" onclick="show(${i})">${d.id}</button>`).join('')}</div></div>`
+    : `<div class="card empty">${want}단원 ${esc($('#q').value)}번 해설을 찾지 못했어요</div>`;
+}
+function show(i, keep){
+  cur = i; deg = 0;
+  const d = DATA[i];
+  if (d.section !== sec) { sec = d.section; renderSecs(); }
+  $('#q').value = d.num;
+  history.replaceState(null, '', '#' + d.id);
+  const imgs = d.img ? String(d.img).split(/\s*,\s*/) : [];
+  const back = fromRule; fromRule = null;
+  $('#out').innerHTML = `
+  <div class="card">
+    ${back ? `<div class="nav" style="margin:-20px 0 24px"><button onclick="showNotes('${back}', /^[AB]-T/.test('${back}') ? '${back}'.charAt(0) : ('${back}'==='dict' ? 'dict' : 'rules'))">← 노트로 돌아가기</button></div>` : ''}
+    <div class="pid">${esc(d.id)}${wrong.has(d.id) ? '<span class="mark">틀림</span>' : ''}</div>
+    <div class="topic">${esc(d.topic)}</div>
+    <div class="ans"><span class="k">정답</span>${esc(d.answer)}</div>
+    <div><button class="wrong-btn ${wrong.has(d.id) ? 'on' : ''}" onclick="toggleWrong()">${wrong.has(d.id) ? '✓ 틀린 문제로 저장됨 (해제)' : '✗ 틀렸어요 · 저장'}</button></div>
+    <div class="meta" style="margin-top:10px">${[d.page && `해설 ${d.page}쪽`, d.rate && `정답률 ${esc(d.rate)}`].filter(Boolean).join(' · ')}</div>
+    ${d.problem ? `<div class="label">문제</div><div class="prob">${paras(d.problem, true)}</div>` : ''}
+    <div class="label">해설</div>
+    <div class="exp">${paras(d.explanation)}</div>
+    ${d.note ? `<div class="note"><b>검증 메모</b> · 책의 표기 오류: ${esc(d.note)}</div>` : ''}
+    ${imgs.length ? `<details><summary>원본 사진 보기${imgs.length > 1 ? ` (${imgs.length}쪽)` : ''} ↓</summary>${imgs.map((f, k) => `${imgs.length > 1 ? `<div class="meta" style="margin-top:18px">${k + 1} / ${imgs.length}</div>` : ''}<img class="page-img" src="pages/${esc(f)}" loading="lazy">`).join('')}<div class="nav"><button onclick="rot()">↻ 회전</button></div></details>` : ''}
+  </div>`;
+  renderMath($('#out'));
+  if (!keep) window.scrollTo({top:0});
+}
+function rot(){ deg = (deg + 90) % 360; document.querySelectorAll('.page-img').forEach(el => el.style.transform = `rotate(${deg}deg)`); }
+let noteTab = 'rules';
+function showNotes(target, tab){
+  if (tab) noteTab = tab;
+  const N = window.NOTES;
+  if (!N) { $('#out').innerHTML = '<div class="card empty">노트를 불러오지 못했어요</div>'; return; }
+  const byId = Object.fromEntries(DATA.map((d,i)=>[d.id,i]));
+  const go = id => `<a class="go" onclick="jumpRule('${id}')">${id}</a>`;
+  const cats = [...new Set(N.rules.map(r => r.category))];
+  const PB = N.playbook;
+  const tabs = [['rules','행동강령'], ...(PB ? [['A','A 유형'],['B','B 유형'],['dict','단서 사전']] : [])];
+  const tabBar = `<div class="ntabs">${tabs.map(([k,l]) => `<button class="${k===noteTab?'on':''}" onclick="showNotes(null,'${k}')">${l}</button>`).join('')}</div>`;
+  const exChips = (ids, rid) => `<div class="ex">${(ids||[]).filter(e => e in byId).map(e => `<button class="chip ${wrong.has(e)?'wrong':''}" onclick="fromRule='${rid}';show(${byId[e]})">${e}</button>`).join('')}</div>`;
+  if (PB && noteTab !== 'rules') {
+    const head = `<div class="pid" style="font-size:30px;text-align:center">${noteTab==='dict' ? '단서 사전' : noteTab + '단원 유형별 플레이북'}</div>
+      <div class="topic" style="text-align:center">${noteTab==='dict' ? '문제에 이런 말이 나오면 → 이런 뜻 → 이렇게 한다' : '단서를 잡고 → 단계마다 얻은 정보로 → 다음 단계로'}</div>${tabBar}`;
+    let body = '';
+    if (noteTab === 'dict') {
+      const groups = [...new Set(PB.dictionary.map(e => e.group))];
+      body = groups.map(g => `<h2>${esc(g)}</h2>` + PB.dictionary.filter(e => e.group === g).map((e, i) => `
+        <div class="rule"><span class="k">문제에 이렇게 나오면</span><div class="forms">${e.forms.map(f => `<span class="form">${esc(f)}</span>`).join('')}</div>
+        <span class="k">뜻</span><div class="why">${esc(e.meaning)}</div>
+        <span class="k">할 일</span><div class="why">${esc(e.action)}</div>
+        <span class="k">연습 문제</span>${exChips(e.examples, 'dict')}</div>`).join('')).join('');
+    } else {
+      body = (PB[noteTab]||[]).map(t => `
+        <div class="rule" id="rule-${t.id}">
+          <div class="rh"><span class="rid">${t.id}</span><span class="rt">${esc(t.name)}</span><span class="lv ${t.difficulty==='고난도'?'hard':''}">${esc(t.difficulty)}</span></div>
+          <span class="k">이 유형 알아보기</span><div class="why">${esc(t.recognize)}</div>
+          <span class="k">무조건 잡을 단서</span>${t.clues.map(c => `<div class="clue"><div class="forms">${c.forms.map(f => `<span class="form">${esc(f)}</span>`).join('')}</div><div class="why">→ ${esc(c.meaning)}</div><div class="why"><b>할 일</b> ${esc(c.action)}</div></div>`).join('')}
+          <span class="k">풀이 흐름</span><ol class="chain">${t.steps.map(st => `<li><div>${esc(st.step)}</div><div class="gv"><b>얻는 것</b>${esc(st.gives)}</div><div class="nx"><b>다음으로</b>${esc(st.next)}</div></li>`).join('')}</ol>
+          <span class="k">연습 문제</span>${exChips(t.examples, t.id)}
+        </div>`).join('');
+    }
+    $('#out').innerHTML = `<div class="card nt pb">${head}${body}</div>`;
+    renderMath($('#out')); history.replaceState(null, '', '#notes');
+    if (target) jumpRule(target); else window.scrollTo({top:0});
+    return;
+  }
+  $('#out').innerHTML = `<div class="card nt">
+    <div class="pid" style="font-size:30px;text-align:center">행동강령 노트</div>
+    <div class="topic" style="text-align:center">A·B단원 해설 ${DATA.filter(d=>d.section!=='C').length}개에서 뽑은 "이게 보이면 → 이렇게 한다"</div>${tabBar}
+    <div class="flow" style="margin-top:28px"><h3>문제 보자마자 30초 판단 순서</h3><ol>${N.flow.map(f => `<li>${esc(f.q)} ${f.go.map(go).join('')}</li>`).join('')}</ol></div>
+    ${cats.map(c => `<h2>${esc(c)}</h2>` + N.rules.filter(r => r.category === c).map(r => `
+      <div class="rule" id="rule-${r.id}">
+        <div class="rh"><span class="rid">${r.id}</span><span class="rt">${esc(r.title)}</span><span class="lv ${r.difficulty==='고난도'?'hard':''}">${esc(r.difficulty)}</span></div>
+        <span class="k">이게 보이면</span><div>${esc(r.trigger)}</div>
+        <span class="k">이렇게 한다</span><ol>${r.action.map(a => `<li>${esc(a)}</li>`).join('')}</ol>
+        ${r.formula ? `<div class="fm">${esc(r.formula)}</div>` : ''}
+        <span class="k">왜 그래야 하나</span><div class="why">${esc(r.why)}</div>
+        ${r.pitfall ? `<span class="k">함정</span><div class="pit">${esc(r.pitfall)}</div>` : ''}
+        <span class="k">연습 문제</span><div class="ex">${r.examples.filter(e => e in byId).map(e => `<button class="chip ${wrong.has(e)?'wrong':''}" onclick="fromRule='${r.id}';show(${byId[e]})">${e}</button>`).join('')}</div>
+      </div>`).join('')).join('')}
+  </div>`;
+  renderMath($('#out'));
+  history.replaceState(null, '', '#notes');
+  if (target) jumpRule(target); else window.scrollTo({top:0});
+}
+function jumpRule(id){
+  const el = document.getElementById('rule-' + id); if (!el) return;
+  el.scrollIntoView({behavior:'smooth'}); el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1500);
+}
+function listAll(){
+  $('#out').innerHTML = `<div class="card"><div class="meta">${sec}단원 ${DATA.filter(d => d.section === sec).length}문제</div><div class="list">${DATA.map((d,i)=>[d,i]).filter(([d]) => d.section === sec).map(([d,i])=>`<button class="chip ${wrong.has(d.id) ? 'wrong' : ''}" onclick="show(${i})">${d.id}</button>`).join('')}</div></div>`;
+}
+function listWrong(){
+  const items = DATA.map((d,i)=>[d,i]).filter(([d]) => wrong.has(d.id));
+  $('#out').innerHTML = `<div class="card"><div class="meta">${profile ? esc(profile) + '님의 ' : ''}틀린 문제 ${items.length}개</div>${items.length
+    ? `<div class="list">${items.map(([d,i]) => `<button class="chip wrong" onclick="show(${i})">${d.id}</button>`).join('')}</div><div class="nav" style="margin-top:24px"><button onclick="if(confirm('틀린 문제 기록을 모두 지울까요?')){wrong.clear();saveW();listWrong();}">기록 모두 지우기</button></div>`
+    : '<div class="empty">아직 체크한 문제가 없어요</div>'}</div>`;
+}
+$('#f').onsubmit = search;
+$('#q').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, ''); });
+$('#prev').onclick = () => show(Math.max(0, cur - 1));
+$('#next').onclick = () => show(Math.min(DATA.length - 1, cur + 1));
+$('#all').onclick = listAll;
+
+$('#wrongs').onclick = listWrong;
+updWrongBtn();
+renderProfile();
+renderSecs();
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowLeft') $('#prev').click();
+  if (e.key === 'ArrowRight') $('#next').click();
+});
+window.addEventListener('DOMContentLoaded', () => {
+  if (location.hash === '#notes') { renderSecs(); showNotes(); }
+  else if (location.hash) { const h = decodeURIComponent(location.hash.slice(1)).toUpperCase(); const m = h.match(/^([A-Z])/); if (m && has(m[1])) sec = m[1]; renderSecs(); $('#q').value = h.replace(/\D/g, ''); search(); }
+});
+</script>
+</body>
+</html>
